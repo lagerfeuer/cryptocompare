@@ -9,6 +9,7 @@ URL_PRICE = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&tsyms={}
 URL_PRICE_MULTI = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&tsyms={}'
 URL_PRICE_MULTI_FULL = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms={}&tsyms={}'
 URL_HIST_PRICE = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym={}&tsyms={}&ts={}'
+URL_AVG = 'https://min-api.cryptocompare.com/data/generateAvg?fsym={}&tsym={}&markets={}'
 
 # FIELDS
 PRICE = 'PRICE'
@@ -24,11 +25,16 @@ CURR = 'EUR'
 
 ###############################################################################
 
-def query_cryptocompare(url):
+def query_cryptocompare(url,errorCheck=True):
     try:
-        return requests.get(url).json()
+        response = requests.get(url).json()
     except Exception as e:
-        sys.exit('Error getting coin information. %s' % str(e))
+        print('Error getting coin information. %s' % str(e))
+        return None
+    if errorCheck and 'Response' in response.keys():
+        print('[ERROR] %s' % response['Message'])
+        return None
+    return response
 
 def format_parameter(parameter):
     if isinstance(parameter, list):
@@ -38,16 +44,21 @@ def format_parameter(parameter):
 
 ###############################################################################
 
-# TODO: add formatting option, if true, it only returns a list of coin names
 def get_coin_list(format=False):
-    return query_cryptocompare(URL_COIN_LIST)['Data']
+    response = query_cryptocompare(URL_COIN_LIST, False)['Data']
+    if format:
+        return list(response.keys())
+    else:
+        return response
 
 # TODO: add option to filter json response according to a list of fields
 def get_price(coin, curr=CURR, full=False):
     if full:
-        return query_cryptocompare(URL_PRICE_MULTI_FULL.format(format_parameter(coin), format_parameter(curr)))
+        return query_cryptocompare(URL_PRICE_MULTI_FULL.format(format_parameter(coin),
+            format_parameter(curr)))
     if isinstance(coin, list):
-        return query_cryptocompare(URL_PRICE_MULTI.format(format_parameter(coin), format_parameter(curr)))
+        return query_cryptocompare(URL_PRICE_MULTI.format(format_parameter(coin),
+            format_parameter(curr)))
     else:
         return query_cryptocompare(URL_PRICE.format(coin, format_parameter(curr)))
 
@@ -56,13 +67,8 @@ def get_historical_price(coin, curr=CURR, timestamp=time.time()):
         timestamp = time.mktime(timestamp.timetuple())
     return query_cryptocompare(URL_HIST_PRICE.format(coin, format_parameter(curr), int(timestamp)))
 
-def get_avg(coins, curr=CURR):
-    pass
-
-def histo_day(coin):
-    pass
-def hist_hour(coin):
-    pass
-def hist_minute(coin):
-    pass
+def get_avg(coin, curr, markets):
+    response = query_cryptocompare(URL_AVG.format(coin, curr, format_parameter(markets)))
+    if response: 
+        return response['RAW']
 

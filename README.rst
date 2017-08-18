@@ -25,9 +25,10 @@ Methods
 
 Coin List
 ---------
+
 .. code:: python
 
-   cryptocompare.get_coin_list()
+   cryptocompare.get_coin_list(format=False)
 
    # ...
    # },
@@ -47,6 +48,8 @@ Coin List
    #  'SortOrder': '1'
    # },
    # ...
+
+If ``format`` is ``True``, the coin list is returned as Python list.
 
 Price
 -----
@@ -72,7 +75,54 @@ Historical Price
 
    # {'XMR': {'EUR': 43.05}}
 
+Average
+-------
 
+.. code:: python
+
+   cryptocompare.get_avg('BTC', 'EUR', 'Kraken')
+
+   # {
+   # 'MARKET': 'CUSTOMAGG',
+   # 'FROMSYMBOL': 'BTC',
+   # 'TOSYMBOL': 'EUR',
+   # 'FLAGS': 0,
+   # 'PRICE': 3610,
+   # 'LASTUPDATE': 1503066719,
+   # 'LASTVOLUME': 0.5,
+   # 'LASTVOLUMETO': 1805,
+   # 'LASTTRADEID': 1503066719.7584,
+   # 'VOLUME24HOUR': 12614.509997469995,
+   # 'VOLUME24HOURTO': 46397723.00499387,
+   # 'OPEN24HOUR': 3847.9,
+   # 'HIGH24HOUR': 3848.96,
+   # 'LOW24HOUR': 3555,
+   # 'LASTMARKET': 'Kraken',
+   # 'CHANGE24HOUR': -237.9000000000001,
+   # 'CHANGEPCT24HOUR': -6.182593102731363
+   # }
+
+
+
+Credit
+******
+
+Thanks to CryptoCompare_ for providing this service and building a community around everything crypto related.
+
+Tipjar
+******
+
+If you like this and/or use it in a project, show some love:
+
+BTC: ``1JJMk3QmcyTjPsvFpKUhgvPNd3KcWCKc86``
+
+ETH: ``0xe3c951a953f56d0ec88800386281e88ea9bef630``
+
+...or head over to https://www.cryptocompare.com and tip CryptoCompare_.
 
 .. _Cryptocompare: https://www.cryptocompare.com/
 
+Disclaimer
+**********
+
+This is a hobby project, no guarantees. If you find bugs, open an issue. If you want additional features, open an issue or create a pull request.
