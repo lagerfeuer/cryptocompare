@@ -68,7 +68,7 @@ Historical Price
    # pass either datetime or time instance
    cryptocompare.get_historical_price('XMR', timestamp=datetime.datetime(2017,6,6))
    # or
-   cryptocompare.get_historical_price('XMR', curr='EUR', datetime.datetime(2017,6,6))
+   cryptocompare.get_historical_price('XMR', 'EUR', datetime.datetime(2017,6,6))
 
    # {'XMR': {'EUR': 43.05}}
 
