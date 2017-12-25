@@ -8,7 +8,7 @@ Installation
 
 .. code:: bash
    
-   sudo pip install cryptocompare
+   sudo pip3 install cryptocompare
 
 Usage
 *****
