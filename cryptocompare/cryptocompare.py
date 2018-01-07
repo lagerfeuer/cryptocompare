@@ -26,14 +26,11 @@ CURR = 'EUR'
 
 ###############################################################################
 
-def query_cryptocompare(url,errorCheck=True):
+def query_cryptocompare(url):
     try:
         response = requests.get(url).json()
     except Exception as e:
         print('Error getting coin information. %s' % str(e))
-        return None
-    if errorCheck and 'Response' in response.keys():
-        print('[ERROR] %s' % response['Message'])
         return None
     return response
 
@@ -69,7 +66,7 @@ def get_historical_price(coin, curr=CURR, timestamp=time.time()):
     return query_cryptocompare(URL_HIST_PRICE.format(coin, format_parameter(curr), int(timestamp)))
 
 def get_historical_hour(coin, curr=CURR):
-    return query_cryptocompare(URL_HIST_HOUR.format(coin, format_parameter(curr)))
+    return query_cryptocompare(URL_HIST_HOUR.format(coin, format_parameter(curr)))['Data']
     
 def get_avg(coin, curr, markets):
     response = query_cryptocompare(URL_AVG.format(coin, curr, format_parameter(markets)))
