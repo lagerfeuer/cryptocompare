@@ -10,6 +10,7 @@ URL_PRICE_MULTI = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&ts
 URL_PRICE_MULTI_FULL = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms={}&tsyms={}'
 URL_HIST_PRICE = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym={}&tsyms={}&ts={}'
 URL_AVG = 'https://min-api.cryptocompare.com/data/generateAvg?fsym={}&tsym={}&markets={}'
+URL_HIST_HOUR = 'https://min-api.cryptocompare.com/data/histohour?fsym={}&tsym={}&e=CCCAGG'
 
 # FIELDS
 PRICE = 'PRICE'
@@ -67,6 +68,9 @@ def get_historical_price(coin, curr=CURR, timestamp=time.time()):
         timestamp = time.mktime(timestamp.timetuple())
     return query_cryptocompare(URL_HIST_PRICE.format(coin, format_parameter(curr), int(timestamp)))
 
+def get_historical_hour(coin, curr=CURR):
+    return query_cryptocompare(URL_HIST_HOUR.format(coin, format_parameter(curr)))
+    
 def get_avg(coin, curr, markets):
     response = query_cryptocompare(URL_AVG.format(coin, curr, format_parameter(markets)))
     if response: 
