@@ -9,6 +9,7 @@ URL_PRICE = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&tsyms={}
 URL_PRICE_MULTI = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&tsyms={}'
 URL_PRICE_MULTI_FULL = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms={}&tsyms={}'
 URL_HIST_PRICE = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym={}&tsyms={}&ts={}'
+URL_HIST_PRICE_HOUR = 'https://min-api.cryptocompare.com/data/histohour?fsym={}&tsym={}'
 URL_AVG = 'https://min-api.cryptocompare.com/data/generateAvg?fsym={}&tsym={}&markets={}'
 
 # FIELDS
@@ -31,6 +32,7 @@ def query_cryptocompare(url,errorCheck=True):
     except Exception as e:
         print('Error getting coin information. %s' % str(e))
         return None
+    # TODO: check for 'Response' and a value different than 'Success'
     if errorCheck and 'Response' in response.keys():
         print('[ERROR] %s' % response['Message'])
         return None
@@ -66,6 +68,9 @@ def get_historical_price(coin, curr=CURR, timestamp=time.time()):
     if isinstance(timestamp, datetime.datetime):
         timestamp = time.mktime(timestamp.timetuple())
     return query_cryptocompare(URL_HIST_PRICE.format(coin, format_parameter(curr), int(timestamp)))
+
+def get_historical_price_hour(coin, curr=CURR):
+    return query_cryptocompare(URL_HIST_PRICE_HOUR.format(coin, format_parameter(curr)), False)
 
 def get_avg(coin, curr, markets):
     response = query_cryptocompare(URL_AVG.format(coin, curr, format_parameter(markets)))

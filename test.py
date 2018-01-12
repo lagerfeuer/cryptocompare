@@ -31,6 +31,11 @@ print(cryptocompare.get_historical_price(coins[1], curr=['EUR','USD','GBP']))
 print(cryptocompare.get_historical_price(coins[1], 'USD',datetime.datetime.now()))
 print(cryptocompare.get_historical_price(coins[2], ['EUR','USD','GBP'],time.time()))
 
+print('================== HIST PRICE HOUR ===============')
+print(cryptocompare.get_historical_price_hour(coins[0]))
+print(cryptocompare.get_historical_price_hour(coins[0], curr='USD'))
+print(cryptocompare.get_historical_price_hour(coins[1], curr=['EUR','USD','GBP']))
+
 print('======================== AVG =====================')
 print(cryptocompare.get_avg(coins[2]))
 print(cryptocompare.get_avg(coins[2], curr='USD'))
