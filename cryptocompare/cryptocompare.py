@@ -72,7 +72,7 @@ def get_historical_price(coin, curr=CURR, timestamp=time.time()):
 def get_historical_price_hour(coin, curr=CURR):
     return query_cryptocompare(URL_HIST_PRICE_HOUR.format(coin, format_parameter(curr)), False)
 
-def get_avg(coin, curr, markets):
+def get_avg(coin, curr=CURR, markets='CCCAGG'):
     response = query_cryptocompare(URL_AVG.format(coin, curr, format_parameter(markets)))
     if response: 
         return response['RAW']
