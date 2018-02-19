@@ -77,14 +77,14 @@ Historical Price
 
 Day
 ---
-
 .. code:: python
+
    cryptocompare.get_historical_price_day('BTC', curr='EUR')
 
 Hour
 ----
-
 .. code:: python
+
    cryptocompare.get_historical_price_hour('BTC', curr='EUR')
 
 Average
