@@ -12,6 +12,7 @@ URL_HIST_PRICE = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym={}
 URL_HIST_PRICE_DAY = 'https://min-api.cryptocompare.com/data/histoday?fsym={}&tsym={}'
 URL_HIST_PRICE_HOUR = 'https://min-api.cryptocompare.com/data/histohour?fsym={}&tsym={}'
 URL_AVG = 'https://min-api.cryptocompare.com/data/generateAvg?fsym={}&tsym={}&e={}'
+URL_EXCHANGES = 'https://www.cryptocompare.com/api/data/exchanges'
 
 # FIELDS
 PRICE = 'PRICE'
@@ -80,3 +81,7 @@ def get_avg(coin, curr=CURR, markets='CCCAGG'):
     if response: 
         return response['RAW']
 
+def get_exchanges():
+    response = query_cryptocompare(URL_EXCHANGES)
+    if response:
+        return response['Data']

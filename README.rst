@@ -115,6 +115,14 @@ Average
    # }
 
 
+Exchanges
+---------
+
+.. code:: python
+
+   cryptocompare.get_exchanges()
+
+
 Credit
 ******
 

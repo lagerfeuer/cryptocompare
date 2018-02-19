@@ -45,4 +45,6 @@ print('======================== AVG =====================')
 print(cryptocompare.get_avg(coins[0], markets='Coinbase'))
 print(cryptocompare.get_avg(coins[0], curr='USD', markets='Coinbase'))
 
+print('====================== EXCHANGES =================')
+print(cryptocompare.get_exchanges())
 
