@@ -32,9 +32,8 @@ def query_cryptocompare(url,errorCheck=True):
     except Exception as e:
         print('Error getting coin information. %s' % str(e))
         return None
-    # TODO: check for 'Response' and a value different than 'Success'
-    if errorCheck and 'Response' in response.keys():
-        print('[ERROR] %s' % response['Message'])
+    if errorCheck and (response.get('Response') == 'Error'):
+        print('[ERROR] %s' % response.get('Message'))
         return None
     return response
 
@@ -70,7 +69,7 @@ def get_historical_price(coin, curr=CURR, timestamp=time.time()):
     return query_cryptocompare(URL_HIST_PRICE.format(coin, format_parameter(curr), int(timestamp)))
 
 def get_historical_price_hour(coin, curr=CURR):
-    return query_cryptocompare(URL_HIST_PRICE_HOUR.format(coin, format_parameter(curr)), False)
+    return query_cryptocompare(URL_HIST_PRICE_HOUR.format(coin, format_parameter(curr)))
 
 def get_avg(coin, curr=CURR, markets='CCCAGG'):
     response = query_cryptocompare(URL_AVG.format(coin, curr, format_parameter(markets)))
