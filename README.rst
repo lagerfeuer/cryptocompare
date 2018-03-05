@@ -7,7 +7,7 @@ Installation
 ************
 
 .. code:: bash
-   
+
    sudo pip3 install cryptocompare
 
 Usage
@@ -23,12 +23,27 @@ Import
 Methods
 =======
 
+Price
+-----
+.. code:: python
+
+   cryptocompare.get_price('BTC')
+   # or
+   cryptocompare.get_price('BTC',currencies='USD',full=True)
+   # or
+   cryptocompare.get_price('BTC',currencies='USD', full=True, exchange='Kraken')
+   # or
+   cryptocompare.get_price(['BTC','ETH'], currencies=['EUR','GBP'])
+
+   # {'BTC': {'EUR': 3709.04, 'GBP': 3354.78},
+   #  'ETH': {'EUR': 258.1, 'GBP': 241.25}}
+
 Coin List
 ---------
 
 .. code:: python
 
-   cryptocompare.get_coin_list(format=False)
+   cryptocompare.get_coin_list()
 
    # ...
    # },
@@ -49,50 +64,13 @@ Coin List
    # },
    # ...
 
-If ``format`` is ``True``, the coin list is returned as Python list.
-
-Price
------
-.. code:: python
-
-   cryptocompare.get_price('BTC')
-   # or
-   cryptocompare.get_price('BTC',curr='USD',full=True)
-   # or
-   cryptocompare.get_price(['BTC','ETH'],['EUR','GBP'])
-
-   # {'BTC': {'EUR': 3709.04, 'GBP': 3354.78},
-   #  'ETH': {'EUR': 258.1, 'GBP': 241.25}}
-
-Historical Price
-----------------
-.. code:: python
-
-   # pass either datetime or time instance
-   cryptocompare.get_historical_price('XMR', timestamp=datetime.datetime(2017,6,6))
-   # or
-   cryptocompare.get_historical_price('XMR', 'EUR', datetime.datetime(2017,6,6))
-
-   # {'XMR': {'EUR': 43.05}}
-
-Day
----
-.. code:: python
-
-   cryptocompare.get_historical_price_day('BTC', curr='EUR')
-
-Hour
-----
-.. code:: python
-
-   cryptocompare.get_historical_price_hour('BTC', curr='EUR')
 
 Average
 -------
 
 .. code:: python
 
-   cryptocompare.get_avg('BTC', 'EUR', 'Kraken')
+   cryptocompare.get_avg('BTC', currency='EUR', exchange='Kraken')
 
    # {
    # 'MARKET': 'CUSTOMAGG',
@@ -114,6 +92,40 @@ Average
    # 'CHANGEPCT24HOUR': -6.182593102731363
    # }
 
+Historical Price
+----------------
+.. code:: python
+
+   # pass either datetime or time instance
+   cryptocompare.get_historical_price('XMR', timestamp=datetime.datetime(2017,6,6))
+   # or
+   cryptocompare.get_historical_price('XMR', currency='EUR', timestamp=datetime.datetime(2017,6,6))
+
+   # {'XMR': {'EUR': 43.05}}
+
+Day
+---
+.. code:: python
+
+   cryptocompare.get_historical_price_day('BTC', currency='EUR')
+   # or
+   cryptocompare.get_historical_price_day('BTC', currency='EUR', exchange='Kraken')
+   # or
+   cryptocompare.get_historical_price_day('BTC', currency='EUR', limit=30)
+   # or
+   cryptocompare.get_historical_price_day('BTC', currency='EUR', exchange='Kraken', aggregate=5)
+
+Hour
+----
+.. code:: python
+
+   cryptocompare.get_historical_price_hour('BTC', currency='EUR')
+
+Minute
+----
+.. code:: python
+
+cryptocompare.get_historical_price_hour('BTC', currency='EUR')
 
 Exchanges
 ---------
@@ -122,6 +134,19 @@ Exchanges
 
    cryptocompare.get_exchanges()
 
+API Rate Limits
+---------------
+.. code:: python
+   cryptocompare.get_rate_limit_all()
+   # or
+   cryptoCompare.get_rate_limit_hour()
+   # or
+   cryptoCompare.get_rate_limit_minute()
+   # or
+   cryptoCompare.get_rate_limit_second()
+
+
+For more examples check Unittests
 
 Credit
 ******
