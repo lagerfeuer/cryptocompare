@@ -92,7 +92,7 @@ def get_daily_avg(coin, currency=DEFAULT_CURRENCY, exchange=DEFAULT_EXCHANGE):
     return __query_cryptocompare(__URL_DAY_AVG.format(coin, currency, exchange))
 
 
-def get_avg(coin, curr=DEFAULT_CURRENCY, exchange=DEFAULT_EXCHANGE):
+def get_avg(coin, currency=DEFAULT_CURRENCY, exchange=DEFAULT_EXCHANGE):
     return __query_cryptocompare(__URL_AVG.format(coin, curr, exchange))['RAW']
 
 

@@ -29,7 +29,7 @@ Price
 
    cryptocompare.get_price('BTC')
    # or
-   cryptocompare.get_price('BTC',curr='USD',f ull=True)
+   cryptocompare.get_price('BTC',curr='USD',full=True)
    # or
    cryptocompare.get_price('BTC',curr='USD', full=True, exchange='Kraken')
    # or
@@ -70,7 +70,7 @@ Average
 
 .. code:: python
 
-   cryptocompare.get_avg('BTC', 'EUR', 'Kraken')
+   cryptocompare.get_avg('BTC', currency='EUR', exchange='Kraken')
 
    # {
    # 'MARKET': 'CUSTOMAGG',
@@ -107,25 +107,25 @@ Day
 ---
 .. code:: python
 
-   cryptocompare.get_historical_price_day('BTC', curr='EUR')
+   cryptocompare.get_historical_price_day('BTC', currency='EUR')
    # or
-   cryptocompare.get_historical_price_day('BTC', curr='EUR', exchange='Kraken')
+   cryptocompare.get_historical_price_day('BTC', currency='EUR', exchange='Kraken')
    # or
-   cryptocompare.get_historical_price_day('BTC', curr='EUR', limit=30)
+   cryptocompare.get_historical_price_day('BTC', currency='EUR', limit=30)
    # or
-   cryptocompare.get_historical_price_day('BTC', curr='EUR', exchange='Kraken', aggregate=5)
+   cryptocompare.get_historical_price_day('BTC', currency='EUR', exchange='Kraken', aggregate=5)
 
 Hour
 ----
 .. code:: python
 
-   cryptocompare.get_historical_price_hour('BTC', curr='EUR')
+   cryptocompare.get_historical_price_hour('BTC', currency='EUR')
 
 Minute
 ----
 .. code:: python
 
-cryptocompare.get_historical_price_hour('BTC', curr='EUR')
+cryptocompare.get_historical_price_hour('BTC', currency='EUR')
 
 Exchanges
 ---------
