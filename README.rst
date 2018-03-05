@@ -29,11 +29,11 @@ Price
 
    cryptocompare.get_price('BTC')
    # or
-   cryptocompare.get_price('BTC',curr='USD',full=True)
+   cryptocompare.get_price('BTC',currencies='USD',full=True)
    # or
-   cryptocompare.get_price('BTC',curr='USD', full=True, exchange='Kraken')
+   cryptocompare.get_price('BTC',currencies='USD', full=True, exchange='Kraken')
    # or
-   cryptocompare.get_price(['BTC','ETH'], ['EUR','GBP'])
+   cryptocompare.get_price(['BTC','ETH'], currencies=['EUR','GBP'])
 
    # {'BTC': {'EUR': 3709.04, 'GBP': 3354.78},
    #  'ETH': {'EUR': 258.1, 'GBP': 241.25}}
@@ -99,7 +99,7 @@ Historical Price
    # pass either datetime or time instance
    cryptocompare.get_historical_price('XMR', timestamp=datetime.datetime(2017,6,6))
    # or
-   cryptocompare.get_historical_price('XMR', 'EUR', datetime.datetime(2017,6,6))
+   cryptocompare.get_historical_price('XMR', currency='EUR', timestamp=datetime.datetime(2017,6,6))
 
    # {'XMR': {'EUR': 43.05}}
 
