@@ -14,6 +14,7 @@ URL_HIST_PRICE_HOUR = 'https://min-api.cryptocompare.com/data/histohour?fsym={}&
 URL_AVG = 'https://min-api.cryptocompare.com/data/generateAvg?fsym={}&tsym={}&e={}'
 URL_EXCHANGES = 'https://www.cryptocompare.com/api/data/exchanges'
 
+
 # FIELDS
 PRICE = 'PRICE'
 HIGH = 'HIGH24HOUR'
