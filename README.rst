@@ -69,7 +69,7 @@ Historical Price
 .. code:: python
 
    # pass either datetime or time instance
-   cryptocompare.get_historical_price('XMR', timestamp=datetime.datetime(2017,6,6))
+   cryptocompare.get_historical_price('XMR', timestamp=datetime.datetime(2017,6,6), exchange='CCCAGG')
    # or
    cryptocompare.get_historical_price('XMR', 'EUR', datetime.datetime(2017,6,6))
 
@@ -92,7 +92,7 @@ Average
 
 .. code:: python
 
-   cryptocompare.get_avg('BTC', 'EUR', 'Kraken')
+   cryptocompare.get_avg('BTC', curr='EUR', exchange='Kraken')
 
    # {
    # 'MARKET': 'CUSTOMAGG',
