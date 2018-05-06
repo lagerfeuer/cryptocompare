@@ -139,7 +139,7 @@ ETH: ``0xe3c951a953f56d0ec88800386281e88ea9bef630``
 
 ...or head over to https://www.cryptocompare.com and tip CryptoCompare_.
 
-.. _Cryptocompare: https://www.cryptocompare.com/
+.. _Cryptocompare: https://min-api.cryptocompare.com/
 
 Disclaimer
 **********
