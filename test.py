@@ -6,6 +6,7 @@ import time
 
 coins = ['BTC', 'ETH', 'XMR', 'NEO']
 currencies = ['EUR', 'USD', 'GBP']
+limit = 500
 
 print('================== COIN LIST =====================')
 print(cryptocompare.get_coin_list())
@@ -30,6 +31,13 @@ print(cryptocompare.get_historical_price(coins[0], curr='USD'))
 print(cryptocompare.get_historical_price(coins[1], curr=['EUR','USD','GBP']))
 print(cryptocompare.get_historical_price(coins[1], 'USD', datetime.datetime.now()))
 print(cryptocompare.get_historical_price(coins[2], ['EUR','USD','GBP'], time.time(), exchange='Kraken'))
+
+print('================== HIST PRICE MINUTE ===============')
+print(cryptocompare.get_historical_price_hour(coins[0]))
+print(cryptocompare.get_historical_price_hour(coins[0], curr='USD'))
+print(cryptocompare.get_historical_price_hour(coins[1], curr=['EUR','USD','GBP']))
+print(cryptocompare.get_historical_price_hour(coins[1], curr=['EUR','USD','GBP'], limit))
+
 
 print('================== HIST PRICE HOUR ===============')
 print(cryptocompare.get_historical_price_hour(coins[0]))
