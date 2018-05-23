@@ -87,6 +87,14 @@ Hour
 
    cryptocompare.get_historical_price_hour('BTC', curr='EUR')
 
+   
+Minute
+----
+.. code:: python
+
+   cryptocompare.get_historical_price_hour('BTC', curr='EUR')
+   cryptocompare.get_historical_price_hour('BTC', curr='EUR', limit=1440)
+
 Average
 -------
 
