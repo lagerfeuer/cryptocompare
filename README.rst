@@ -134,18 +134,7 @@ Exchanges
 Credit
 ******
 
-Thanks to CryptoCompare_ for providing this service and building a community around everything crypto related.
-
-Tipjar
-******
-
-If you like this and/or use it in a project, show some love:
-
-BTC: ``1JJMk3QmcyTjPsvFpKUhgvPNd3KcWCKc86``
-
-ETH: ``0xe3c951a953f56d0ec88800386281e88ea9bef630``
-
-...or head over to https://www.cryptocompare.com and tip CryptoCompare_.
+Thanks to CryptoCompare_ for providing this service.
 
 .. _Cryptocompare: https://min-api.cryptocompare.com/
 
