@@ -129,6 +129,15 @@ Exchanges
 .. code:: python
 
    cryptocompare.get_exchanges()
+   
+
+Optional Arguments
+------------------
+
+All methods support optional arguments of the requests.get method.
+checkout requests_ for more information.
+
+.. _requests: https://github.com/requests/requests
 
 
 Credit
