@@ -1,4 +1,3 @@
-import sys
 import requests
 import time
 import datetime
@@ -29,9 +28,9 @@ CURR = 'EUR'
 LIMIT = 1440
 ###############################################################################
 
-def query_cryptocompare(url,errorCheck=True):
+def query_cryptocompare(url,errorCheck=True, *args, **kwargs):
     try:
-        response = requests.get(url).json()
+        response = requests.get(url, *args, **kwargs).json()
     except Exception as e:
         print('Error getting coin information. %s' % str(e))
         return None
@@ -48,45 +47,45 @@ def format_parameter(parameter):
 
 ###############################################################################
 
-def get_coin_list(format=False):
-    response = query_cryptocompare(URL_COIN_LIST, False)['Data']
+def get_coin_list(format=False, *args, **kwargs):
+    response = query_cryptocompare(URL_COIN_LIST, False, *args, **kwargs)['Data']
     if format:
         return list(response.keys())
     else:
         return response
 
 # TODO: add option to filter json response according to a list of fields
-def get_price(coin, curr=CURR, full=False):
+def get_price(coin, curr=CURR, full=False, *args, **kwargs):
     if full:
         return query_cryptocompare(URL_PRICE_MULTI_FULL.format(format_parameter(coin),
-            format_parameter(curr)))
+            format_parameter(curr)), *args, **kwargs)
     if isinstance(coin, list):
         return query_cryptocompare(URL_PRICE_MULTI.format(format_parameter(coin),
-            format_parameter(curr)))
+            format_parameter(curr)), *args, **kwargs)
     else:
-        return query_cryptocompare(URL_PRICE.format(coin, format_parameter(curr)))
+        return query_cryptocompare(URL_PRICE.format(coin, format_parameter(curr)), *args, **kwargs)
 
-def get_historical_price(coin, curr=CURR, timestamp=time.time(), exchange='CCCAGG'):
+def get_historical_price(coin, curr=CURR, timestamp=time.time(), exchange='CCCAGG', *args, **kwargs):
     if isinstance(timestamp, datetime.datetime):
         timestamp = time.mktime(timestamp.timetuple())
     return query_cryptocompare(URL_HIST_PRICE.format(coin, format_parameter(curr),
-        int(timestamp), format_parameter(exchange)))
+        int(timestamp), format_parameter(exchange)), *args, **kwargs)
 
-def get_historical_price_day(coin, curr=CURR):
-    return query_cryptocompare(URL_HIST_PRICE_DAY.format(coin, format_parameter(curr)))
+def get_historical_price_day(coin, curr=CURR, *args, **kwargs):
+    return query_cryptocompare(URL_HIST_PRICE_DAY.format(coin, format_parameter(curr)), *args, **kwargs)
 
-def get_historical_price_hour(coin, curr=CURR):
-    return query_cryptocompare(URL_HIST_PRICE_HOUR.format(coin, format_parameter(curr)))
+def get_historical_price_hour(coin, curr=CURR, *args, **kwargs):
+    return query_cryptocompare(URL_HIST_PRICE_HOUR.format(coin, format_parameter(curr)), *args, **kwargs)
 
-def get_historical_price_minute(coin, curr=CURR, limit=LIMIT):
-    return query_cryptocompare(URL_HIST_PRICE_MINUTE.format(coin, format_parameter(curr), limit))
+def get_historical_price_minute(coin, curr=CURR, limit=LIMIT, *args, **kwargs):
+    return query_cryptocompare(URL_HIST_PRICE_MINUTE.format(coin, format_parameter(curr), limit), *args, **kwargs)
 
-def get_avg(coin, curr=CURR, exchange='CCCAGG'):
-    response = query_cryptocompare(URL_AVG.format(coin, curr, format_parameter(exchange)))
+def get_avg(coin, curr=CURR, exchange='CCCAGG', *args, **kwargs):
+    response = query_cryptocompare(URL_AVG.format(coin, curr, format_parameter(exchange)), *args, **kwargs)
     if response:
         return response['RAW']
 
-def get_exchanges():
-    response = query_cryptocompare(URL_EXCHANGES)
+def get_exchanges(*args, **kwargs):
+    response = query_cryptocompare(URL_EXCHANGES, *args, **kwargs)
     if response:
         return response['Data']
