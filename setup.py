@@ -5,7 +5,7 @@ with open('README.rst', encoding="utf-8") as f:
 
 setup(
         name='cryptocompare',
-        version='0.6.1',
+        version='0.6.2',
         description='Wrapper for CryptoCompare.com',
         long_description=readme,
         url='https://github.com/lagerfeuer/cryptocompare',
