@@ -89,7 +89,7 @@ Hour
 
    
 Minute
-----
+------
 .. code:: python
 
    cryptocompare.get_historical_price_minute('BTC', curr='EUR')
