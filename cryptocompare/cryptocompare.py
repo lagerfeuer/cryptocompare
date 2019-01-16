@@ -7,7 +7,7 @@ URL_COIN_LIST = 'https://www.cryptocompare.com/api/data/coinlist/'
 URL_PRICE = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&tsyms={}'
 URL_PRICE_MULTI = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&tsyms={}'
 URL_PRICE_MULTI_FULL = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms={}&tsyms={}'
-URL_HIST_PRICE = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym={}&tsyms={}&ts={}&e={}'
+URL_HIST_PRICE = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym={}&tsyms={}&ts={}&e={}&calculationType={}'
 URL_HIST_PRICE_DAY = 'https://min-api.cryptocompare.com/data/histoday?fsym={}&tsym={}'
 URL_HIST_PRICE_HOUR = 'https://min-api.cryptocompare.com/data/histohour?fsym={}&tsym={}'
 URL_HIST_PRICE_MINUTE = 'https://min-api.cryptocompare.com/data/histominute?fsym={}&tsym={}&limit={}'
@@ -65,11 +65,11 @@ def get_price(coin, curr=CURR, full=False, *args, **kwargs):
     else:
         return query_cryptocompare(URL_PRICE.format(coin, format_parameter(curr)), *args, **kwargs)
 
-def get_historical_price(coin, curr=CURR, timestamp=time.time(), exchange='CCCAGG', *args, **kwargs):
+def get_historical_price(coin, curr=CURR, timestamp=time.time(), exchange='CCCAGG', calculationType='Close', *args, **kwargs):
     if isinstance(timestamp, datetime.datetime):
         timestamp = time.mktime(timestamp.timetuple())
     return query_cryptocompare(URL_HIST_PRICE.format(coin, format_parameter(curr),
-        int(timestamp), format_parameter(exchange)), *args, **kwargs)
+        int(timestamp), format_parameter(exchange), calculationType), *args, **kwargs)
 
 def get_historical_price_day(coin, curr=CURR, *args, **kwargs):
     return query_cryptocompare(URL_HIST_PRICE_DAY.format(coin, format_parameter(curr)), *args, **kwargs)
