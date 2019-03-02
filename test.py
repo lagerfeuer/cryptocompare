@@ -31,6 +31,7 @@ print(cryptocompare.get_historical_price(coins[0], curr='USD'))
 print(cryptocompare.get_historical_price(coins[1], curr=['EUR','USD','GBP']))
 print(cryptocompare.get_historical_price(coins[1], 'USD', datetime.datetime.now()))
 print(cryptocompare.get_historical_price(coins[2], ['EUR','USD','GBP'], time.time(), exchange='Kraken'))
+print(cryptocompare.get_historical_price(coins[2], ['EUR','USD','GBP'], time.time(), calculationType='MidHighLow'))
 
 print('================== HIST PRICE MINUTE ===============')
 print(cryptocompare.get_historical_price_minute(coins[0], curr='USD'))
@@ -52,3 +53,7 @@ print(cryptocompare.get_avg(coins[0], curr='USD', exchange='Coinbase'))
 
 print('====================== EXCHANGES =================')
 print(cryptocompare.get_exchanges())
+
+print('====================== requests params =================')
+print(cryptocompare.get_price(coins[0], timeout=0.0000000001))
+print(cryptocompare.get_price(coins[0], proxies={}))
