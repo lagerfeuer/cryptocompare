@@ -69,7 +69,7 @@ Historical Price
 .. code:: python
 
    # pass either datetime or time instance
-   cryptocompare.get_historical_price('XMR', timestamp=datetime.datetime(2017,6,6), exchange='CCCAGG')
+   cryptocompare.get_historical_price('XMR', timestamp=datetime.datetime(2017,6,6), exchange='CCCAGG', calculationType='Close')
    # or
    cryptocompare.get_historical_price('XMR', 'EUR', datetime.datetime(2017,6,6))
 
