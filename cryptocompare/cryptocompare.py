@@ -72,13 +72,19 @@ def get_historical_price(coin, curr=CURR, timestamp=time.time(), exchange='CCCAG
         int(timestamp), format_parameter(exchange)))
 
 def get_historical_price_day(coin, curr=CURR, limit=LIMIT):
-    return query_cryptocompare(URL_HIST_PRICE_DAY.format(coin, format_parameter(curr), limit))
+    response = query_cryptocompare(URL_HIST_PRICE_DAY.format(coin, format_parameter(curr), limit))
+    if response:
+        return response['Data']
 
 def get_historical_price_hour(coin, curr=CURR, limit=LIMIT):
-    return query_cryptocompare(URL_HIST_PRICE_HOUR.format(coin, format_parameter(curr), limit))
+    response = query_cryptocompare(URL_HIST_PRICE_HOUR.format(coin, format_parameter(curr), limit))
+    if response:
+        return response['Data']
 
 def get_historical_price_minute(coin, curr=CURR, limit=LIMIT):
-    return query_cryptocompare(URL_HIST_PRICE_MINUTE.format(coin, format_parameter(curr), limit))
+    response = query_cryptocompare(URL_HIST_PRICE_MINUTE.format(coin, format_parameter(curr), limit))
+    if response:
+        return response['Data']
 
 def get_avg(coin, curr=CURR, exchange='CCCAGG'):
     response = query_cryptocompare(URL_AVG.format(coin, curr, format_parameter(exchange)))
