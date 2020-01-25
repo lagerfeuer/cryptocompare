@@ -8,7 +8,7 @@ Installation
 
 .. code:: bash
    
-   sudo pip3 install cryptocompare
+   pip3 install cryptocompare
 
 Usage
 *****
@@ -49,7 +49,8 @@ Coin List
    # },
    # ...
 
-If ``format`` is ``True``, the coin list is returned as Python list.
+If ``format`` is ``True``, the coin list is returned as Python list,
+containing only the abbreviations (like `BTC`).
 
 Price
 -----
@@ -129,6 +130,17 @@ Exchanges
 .. code:: python
 
    cryptocompare.get_exchanges()
+
+
+Developing
+**********
+
+Install the dependencies and run the tests with:
+
+.. code:: shell
+
+    pip3 install -r requirements.txt
+    python3 -m pytest
 
 
 Credit
