@@ -26,5 +26,6 @@ jobs:
 
     - name: Upload coverage report
       run: |
+        pip install coveralls
         coveralls
 
