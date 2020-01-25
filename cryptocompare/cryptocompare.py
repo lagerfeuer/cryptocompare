@@ -60,18 +60,18 @@ def _format_parameter(parameter: object) -> str:
 ###############################################################################
 
 
-def get_coin_list(format: bool = False) -> Union[Dict, List]:
+def get_coin_list(format: bool = False) -> Union[Dict, List, None]:
     """
     Get the coin list (all available coins).
 
     :param format: format as python list (default: False)
     :returns: dict or list of available coins
     """
-    response = _query_cryptocompare(_URL_COIN_LIST, False)['Data']
-    if format:
-        return list(response.keys())
-    else:
-        return response
+    response = _query_cryptocompare(_URL_COIN_LIST, False)
+    if response:
+        response = typing.cast(Dict, response['Data'])
+        return list(response.keys()) if format else response
+    return None
 
 # TODO: add option to filter json response according to a list of fields
 
@@ -113,7 +113,7 @@ def get_historical_price(coin: str, curr: str = CURR, timestamp: Timestamp = tim
 
 
 # TODO add toTs timestamp
-def get_historical_price_day(coin: str, curr: str=CURR, limit: int=LIMIT) -> Optional[Dict]:
+def get_historical_price_day(coin: str, curr: str = CURR, limit: int = LIMIT) -> Optional[Dict]:
     """
     Get historical price (day).
 
@@ -126,10 +126,11 @@ def get_historical_price_day(coin: str, curr: str=CURR, limit: int=LIMIT) -> Opt
         _URL_HIST_PRICE_DAY.format(coin, _format_parameter(curr), limit))
     if response:
         return response['Data']
+    return None
 
 
 # TODO add toTs timestamp
-def get_historical_price_hour(coin: str, curr: str=CURR, limit: int=LIMIT) -> Optional[Dict]:
+def get_historical_price_hour(coin: str, curr: str = CURR, limit: int = LIMIT) -> Optional[Dict]:
     """
     Get historical price (hourly).
 
@@ -142,10 +143,11 @@ def get_historical_price_hour(coin: str, curr: str=CURR, limit: int=LIMIT) -> Op
         _URL_HIST_PRICE_HOUR.format(coin, _format_parameter(curr), limit))
     if response:
         return response['Data']
+    return None
 
 
 # TODO add toTs timestamp
-def get_historical_price_minute(coin: str, curr: str=CURR, limit: int=LIMIT) -> Optional[Dict]:
+def get_historical_price_minute(coin: str, curr: str = CURR, limit: int = LIMIT) -> Optional[Dict]:
     """
     Get historical price (minute).
 
@@ -158,9 +160,10 @@ def get_historical_price_minute(coin: str, curr: str=CURR, limit: int=LIMIT) -> 
         _URL_HIST_PRICE_MINUTE.format(coin, _format_parameter(curr), limit))
     if response:
         return response['Data']
+    return None
 
 
-def get_avg(coin: str, curr: str=CURR, exchange: str='CCCAGG') -> Optional[Dict]:
+def get_avg(coin: str, curr: str = CURR, exchange: str = 'CCCAGG') -> Optional[Dict]:
     """
     Get the average price
 
@@ -173,6 +176,7 @@ def get_avg(coin: str, curr: str=CURR, exchange: str='CCCAGG') -> Optional[Dict]
         coin, curr, _format_parameter(exchange)))
     if response:
         return response['RAW']
+    return None
 
 
 def get_exchanges() -> Optional[Dict]:
@@ -184,3 +188,4 @@ def get_exchanges() -> Optional[Dict]:
     response = _query_cryptocompare(_URL_EXCHANGES)
     if response:
         return response['Data']
+    return None
