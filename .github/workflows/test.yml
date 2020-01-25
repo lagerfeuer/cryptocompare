@@ -19,5 +19,4 @@ jobs:
         pip install -r requirements.txt
     - name: Test with pytest
       run: |
-        pip install pytest
-        pyhton -m pytest
+        python -m pytest --cov=cryptocompare
