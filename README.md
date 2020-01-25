@@ -1,4 +1,5 @@
-# cryptocompare
+# cryptocompare [![PyPI version](https://badge.fury.io/py/cryptocompare.svg)](https://badge.fury.io/py/cryptocompare) [![Requirements Status](https://requires.io/github/lagerfeuer/cryptocompare/requirements.svg?branch=testing)](https://requires.io/github/lagerfeuer/cryptocompare/requirements/?branch=testing)
+
 
 Python3 wrapper to query cryptocurrency prices (and more) using the [CryptoCompare](https://min-api.cryptocompare.com/) API.
 
