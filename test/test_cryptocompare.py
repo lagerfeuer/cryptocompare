@@ -75,6 +75,13 @@ class TestCryptoCompare(unittest.TestCase):
     for frame in price:
       self.assertIn('time', frame)
 
+  def test_get_avg(self):
+    coin = 'BTC'
+    curr = 'USD'
+    avg = cryptocompare.get_avg(coin, curr, exchange='Kraken')
+    self.assertEqual(avg['LASTMARKET'], 'Kraken')
+    self.assertEqual(avg['FROMSYMBOL'], coin)
+    self.assertEqual(avg['TOSYMBOL'], curr)
 
 if __name__ == "__main__":
   unittest.main()
