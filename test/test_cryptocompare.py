@@ -4,6 +4,7 @@ import unittest
 import cryptocompare
 import datetime
 
+
 class TestCryptoCompare(unittest.TestCase):
   def assertCoinAndCurrInPrice(self, coin, curr, price):
     if isinstance(coin, list):
@@ -31,7 +32,7 @@ class TestCryptoCompare(unittest.TestCase):
     self.assertCoinAndCurrInPrice(coin, 'EUR', price)
     price = cryptocompare.get_price(coin, curr='USD')
     self.assertCoinAndCurrInPrice(coin, 'USD', price)
-    currencies = ['EUR','USD','GBP']
+    currencies = ['EUR', 'USD', 'GBP']
     price = cryptocompare.get_price(coin, curr=currencies)
     self.assertCoinAndCurrInPrice(coin, currencies, price)
     coins = ['BTC', 'XMR']
@@ -48,9 +49,11 @@ class TestCryptoCompare(unittest.TestCase):
   def test_get_historical_price(self):
     coin = 'XMR'
     curr = 'EUR'
-    price = cryptocompare.get_historical_price('XMR', timestamp=datetime.datetime(2017,6,6), exchange='CCCAGG')
+    price = cryptocompare.get_historical_price(
+        'XMR', timestamp=datetime.datetime(2017, 6, 6), exchange='CCCAGG')
     self.assertCoinAndCurrInPrice(coin, curr, price)
-    price2 = cryptocompare.get_historical_price('XMR', 'EUR', datetime.datetime(2017,6,6))
+    price2 = cryptocompare.get_historical_price(
+        'XMR', 'EUR', datetime.datetime(2017, 6, 6))
     self.assertCoinAndCurrInPrice(coin, curr, price2)
     self.assertEqual(price, price2)
 
@@ -86,6 +89,7 @@ class TestCryptoCompare(unittest.TestCase):
   def test_get_exchanges(self):
     exchanges = cryptocompare.get_exchanges()
     self.assertIn('Kraken', exchanges)
+
 
 if __name__ == "__main__":
   unittest.main()
