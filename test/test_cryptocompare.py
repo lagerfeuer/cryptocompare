@@ -50,8 +50,9 @@ class TestCryptoCompare(unittest.TestCase):
     curr = 'EUR'
     price = cryptocompare.get_historical_price('XMR', timestamp=datetime.datetime(2017,6,6), exchange='CCCAGG')
     self.assertCoinAndCurrInPrice(coin, curr, price)
-    price = cryptocompare.get_historical_price('XMR', 'EUR', datetime.datetime(2017,6,6))
-    self.assertCoinAndCurrInPrice(coin, curr, price)
+    price2 = cryptocompare.get_historical_price('XMR', 'EUR', datetime.datetime(2017,6,6))
+    self.assertCoinAndCurrInPrice(coin, curr, price2)
+    self.assertEqual(price, price2)
 
 
 if __name__ == "__main__":
