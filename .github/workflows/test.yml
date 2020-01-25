@@ -22,9 +22,9 @@ jobs:
 
     - name: Test with pytest
       run: |
-        python -m pytest --cov=cryptocompare
+        python -m pytest --cov=cryptocompare tests/
 
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload coverage report
+      run: |
+        coveralls
+
