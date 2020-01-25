@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 
-# import sys, os
-# sys.path.insert(0, os.path.abspath('..'))
-
 import unittest
 import cryptocompare
-
-
+import datetime
 
 class TestCryptoCompare(unittest.TestCase):
   def assertCoinAndCurrInPrice(self, coin, curr, price):
@@ -48,6 +44,14 @@ class TestCryptoCompare(unittest.TestCase):
     self.assertIn('ETH', price['RAW'])
     self.assertIn('EUR', price['RAW']['ETH'])
     self.assertIn('PRICE', price['RAW']['ETH']['EUR'])
+
+  def test_get_historical_price(self):
+    coin = 'XMR'
+    curr = 'EUR'
+    price = cryptocompare.get_historical_price('XMR', timestamp=datetime.datetime(2017,6,6), exchange='CCCAGG')
+    self.assertCoinAndCurrInPrice(coin, curr, price)
+    price = cryptocompare.get_historical_price('XMR', 'EUR', datetime.datetime(2017,6,6))
+    self.assertCoinAndCurrInPrice(coin, curr, price)
 
 
 if __name__ == "__main__":
