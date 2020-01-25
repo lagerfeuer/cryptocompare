@@ -54,6 +54,27 @@ class TestCryptoCompare(unittest.TestCase):
     self.assertCoinAndCurrInPrice(coin, curr, price2)
     self.assertEqual(price, price2)
 
+  def test_price_day(self):
+    coin = 'BTC'
+    curr = 'USD'
+    price = cryptocompare.get_historical_price_day(coin, curr=curr, limit=3)
+    for frame in price:
+      self.assertIn('time', frame)
+
+  def test_price_hour(self):
+    coin = 'BTC'
+    curr = 'USD'
+    price = cryptocompare.get_historical_price_hour(coin, curr=curr, limit=3)
+    for frame in price:
+      self.assertIn('time', frame)
+
+  def test_price_minute(self):
+    coin = 'BTC'
+    curr = 'USD'
+    price = cryptocompare.get_historical_price_minute(coin, curr=curr, limit=3)
+    for frame in price:
+      self.assertIn('time', frame)
+
 
 if __name__ == "__main__":
   unittest.main()
