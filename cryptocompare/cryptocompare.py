@@ -6,7 +6,7 @@ import time
 import datetime
 import typing
 from typing import Union, Optional, List, Dict
-Timestamp = Union[datetime.datetime, time.time]
+Timestamp = Union[datetime.datetime, int, float]
 
 # API
 _URL_COIN_LIST = 'https://www.cryptocompare.com/api/data/coinlist/'
