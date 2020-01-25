@@ -83,5 +83,9 @@ class TestCryptoCompare(unittest.TestCase):
     self.assertEqual(avg['FROMSYMBOL'], coin)
     self.assertEqual(avg['TOSYMBOL'], curr)
 
+  def test_get_exchanges(self):
+    exchanges = cryptocompare.get_exchanges()
+    self.assertIn('Kraken', exchanges)
+
 if __name__ == "__main__":
   unittest.main()
