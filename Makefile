@@ -1,4 +1,4 @@
-all: sdist upload
+all: sdist
 
 sdist:
 	python3 setup.py sdist
@@ -6,7 +6,10 @@ sdist:
 upload:
 	twine upload dist/*
 
-test:
-	python3 -m pytest --cov=cryptocompare
+mypy:
+	python3 -m mypy cryptocompare/cryptocompare.py
 
-.PHONY: sdist upload test
+test:
+	python3 -m pytest --mypy --cov=cryptocompare tests/
+
+.PHONY: sdist upload mypy test
