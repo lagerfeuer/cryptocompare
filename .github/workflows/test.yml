@@ -9,14 +9,22 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+
     - name: Set up Python 3.8
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+
     - name: Test with pytest
       run: |
         python -m pytest --cov=cryptocompare
+
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
