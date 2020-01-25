@@ -20,9 +20,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Test with mypy
+      run: |
+        python -m mypy cryptocompare/cryptocompare.py
+
     - name: Test with pytest
       run: |
-        python -m pytest --mypy --cov=cryptocompare tests/
+        python -m pytest --cov=cryptocompare tests/
 
     - name: Upload coverage report to coveralls.io
       env:
