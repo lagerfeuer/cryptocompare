@@ -71,6 +71,7 @@ cryptocompare.get_historical_price('XMR', 'EUR', datetime.datetime(2017,6,6))
 ```python
 cryptocompare.get_historical_price_day('BTC', curr='EUR')
 cryptocompare.get_historical_price_day('BTC', curr='EUR', limit=30)
+cryptocompare.get_historical_price_day('BTC', 'EUR', limit=30, exchange='CCCAGG')
 ```
 
 #### Hour
@@ -78,6 +79,7 @@ cryptocompare.get_historical_price_day('BTC', curr='EUR', limit=30)
 ```python
 cryptocompare.get_historical_price_hour('BTC', curr='EUR')
 cryptocompare.get_historical_price_hour('BTC', curr='EUR', limit=24)
+cryptocompare.get_historical_price_hour('BTC', 'EUR', limit=24, exchange='CCCAGG')
 ```
 
 #### Minute
@@ -85,6 +87,7 @@ cryptocompare.get_historical_price_hour('BTC', curr='EUR', limit=24)
 ```python
 cryptocompare.get_historical_price_minute('BTC', curr='EUR')
 cryptocompare.get_historical_price_minute('BTC', curr='EUR', limit=1440)
+cryptocompare.get_historical_price_minute('BTC', 'EUR', limit=1440, exchange='CCCAGG')
 ```
 
 ### Average
