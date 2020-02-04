@@ -121,6 +121,13 @@ cryptocompare.get_avg('BTC', curr='EUR', exchange='Kraken')
 cryptocompare.get_exchanges()
 ```
 
+### Pairs
+
+```python
+cryptocompare.get_pairs()
+pairs = cryptocompare.get_pairs(exchange='Kraken')
+```
+
 ## Developing
 
 Install the dev dependencies and run the tests:
