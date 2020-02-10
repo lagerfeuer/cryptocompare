@@ -29,6 +29,7 @@ jobs:
         python -m pytest --cov=cryptocompare tests/
 
     - name: Upload coverage report to coveralls.io
+      if: github.event == 'push'
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
       run: |
