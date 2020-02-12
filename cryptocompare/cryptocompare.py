@@ -207,7 +207,8 @@ def get_pairs(exchange: str = None) -> Optional[Dict]:
     :returns: list of available exchanges
     """
     if exchange is None:
-        response = _query_cryptocompare(_URL_PAIRS[:-5])  
+        response = _query_cryptocompare(_URL_PAIRS.split('?')[0])
+        
     else:
         response = _query_cryptocompare(_URL_PAIRS.format(exchange))
     if response:
