@@ -90,6 +90,9 @@ class TestCryptoCompare(unittest.TestCase):
     exchanges = cryptocompare.get_exchanges()
     self.assertIn('Kraken', exchanges)
 
+  def test_get_pairs(self):
+    pairs = cryptocompare.get_pairs(exchange='Kraken')
+    self.assertEqual('Kraken', pairs[0]['exchange'])
 
 if __name__ == "__main__":
   unittest.main()

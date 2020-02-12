@@ -19,6 +19,7 @@ _URL_HIST_PRICE_HOUR = 'https://min-api.cryptocompare.com/data/histohour?fsym={}
 _URL_HIST_PRICE_MINUTE = 'https://min-api.cryptocompare.com/data/histominute?fsym={}&tsym={}&limit={}&e={}'
 _URL_AVG = 'https://min-api.cryptocompare.com/data/generateAvg?fsym={}&tsym={}&e={}'
 _URL_EXCHANGES = 'https://www.cryptocompare.com/api/data/exchanges'
+_URL_PAIRS = 'https://min-api.cryptocompare.com/data/pair/mapping/exchange?e={}'
 
 # DEFAULTS
 CURR = 'EUR'
@@ -192,6 +193,24 @@ def get_exchanges() -> Optional[Dict]:
     :returns: list of available exchanges
     """
     response = _query_cryptocompare(_URL_EXCHANGES)
+    if response:
+        return response['Data']
+    return None
+
+
+def get_pairs(exchange: str = None) -> Optional[Dict]:
+    """
+    Get the list of available pairs for a particular exchange or for 
+    all exchanges (if exchange is None)
+    
+    :param exchange: exchange to use (default: None)
+    :returns: list of available exchanges
+    """
+    if exchange is None:
+        response = _query_cryptocompare(_URL_PAIRS.split('?')[0])
+        
+    else:
+        response = _query_cryptocompare(_URL_PAIRS.format(exchange))
     if response:
         return response['Data']
     return None
