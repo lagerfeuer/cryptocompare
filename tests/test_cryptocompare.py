@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import time
 import unittest
 import cryptocompare
 import datetime
@@ -74,7 +74,7 @@ class TestCryptoCompare(unittest.TestCase):
   def test_price_minute(self):
     coin = 'BTC'
     curr = 'USD'
-    price = cryptocompare.get_historical_price_minute(coin, curr=curr, limit=3, exchange='CCCAGG')
+    price = cryptocompare.get_historical_price_minute(coin, curr=curr, limit=3, exchange='CCCAGG', toTs=datetime.datetime.now())
     for frame in price:
       self.assertIn('time', frame)
 

@@ -92,9 +92,7 @@ cryptocompare.get_historical_price_hour('BTC', 'EUR', limit=24, exchange='CCCAGG
 ```python
 cryptocompare.get_historical_price_minute('BTC', curr='EUR')
 cryptocompare.get_historical_price_minute('BTC', curr='EUR', limit=1440)
-cryptocompare.get_historical_price_minute('BTC', 'EUR', limit=24, exchange='CCCAGG', toTs=datetime.datetime(2019,6,6,12,59))
-# or
-cryptocompare.get_historical_price_minute('BTC', 'EUR', limit=24, exchange='CCCAGG', toTs=datetime.datetime(1559815200))
+cryptocompare.get_historical_price_minute('BTC', 'EUR', limit=24, exchange='CCCAGG', toTs=datetime.datetime.now())
 ```
 
 ### Average
