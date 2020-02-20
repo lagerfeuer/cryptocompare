@@ -74,7 +74,7 @@ class TestCryptoCompare(unittest.TestCase):
   def test_price_minute(self):
     coin = 'BTC'
     curr = 'USD'
-    price = cryptocompare.get_historical_price_minute(coin, curr=curr, limit=3, exchange='CCCAGG', toTs=datetime.datetime(2019,6,6,12,55))
+    price = cryptocompare.get_historical_price_minute(coin, curr=curr, limit=3, exchange='CCCAGG')
     for frame in price:
       self.assertIn('time', frame)
 

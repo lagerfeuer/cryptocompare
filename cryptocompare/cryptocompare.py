@@ -55,10 +55,23 @@ def _format_parameter(parameter: object) -> str:
     """
     if isinstance(parameter, list):
         return ','.join(parameter)
-    elif isinstance(parameter, datetime.datetime):
-        return str(time.mktime(parameter.timetuple()))
+
     else:
         return str(parameter)
+
+
+def _format_timestamp(timestamp) -> int:
+    """
+    Format the timestamp depending on its type and return
+    the integer representation accepted by the API.
+
+    :param timestamp: timestamp to format
+    """
+    if isinstance(timestamp, datetime.datetime):
+        return int(time.mktime(timestamp.timetuple()))
+    else:
+        return int(timestamp)
+
 
 ###############################################################################
 
@@ -110,7 +123,7 @@ def get_historical_price(coin: str, curr: str = CURR, timestamp: Timestamp = tim
     :returns: dict of coin and currency price pairs
     """
     return _query_cryptocompare(_URL_HIST_PRICE.format(coin, _format_parameter(curr),
-                                                       _format_parameter(timestamp), _format_parameter(exchange)))
+                                                       _format_timestamp(timestamp), _format_parameter(exchange)))
 
 
 def get_historical_price_day(coin: str, curr: str = CURR, limit: int = LIMIT,
@@ -126,7 +139,7 @@ def get_historical_price_day(coin: str, curr: str = CURR, limit: int = LIMIT,
     :returns: dict of coin and currency price pairs
     """
     response = _query_cryptocompare(
-        _URL_HIST_PRICE_DAY.format(coin, _format_parameter(curr), limit, exchange, _format_parameter(toTs)))
+        _URL_HIST_PRICE_DAY.format(coin, _format_parameter(curr), limit, exchange, _format_timestamp(toTs)))
     if response:
         return response['Data']
     return None
@@ -146,7 +159,7 @@ def get_historical_price_hour(coin: str, curr: str = CURR, limit: int = LIMIT,
     :returns: dict of coin and currency price pairs
     """
     response = _query_cryptocompare(
-        _URL_HIST_PRICE_HOUR.format(coin, _format_parameter(curr), limit, exchange, _format_parameter(toTs)))
+        _URL_HIST_PRICE_HOUR.format(coin, _format_parameter(curr), limit, exchange, _format_timestamp(toTs)))
     if response:
         return response['Data']
     return None
@@ -165,7 +178,7 @@ def get_historical_price_minute(coin: str, curr: str = CURR, limit: int = LIMIT,
     :returns: dict of coin and currency price pairs
     """
     response = _query_cryptocompare(
-        _URL_HIST_PRICE_MINUTE.format(coin, _format_parameter(curr), limit, exchange, _format_parameter(toTs)))
+        _URL_HIST_PRICE_MINUTE.format(coin, _format_parameter(curr), limit, exchange, _format_timestamp(toTs)))
     if response:
         return response['Data']
     return None
