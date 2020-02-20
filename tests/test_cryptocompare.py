@@ -60,21 +60,21 @@ class TestCryptoCompare(unittest.TestCase):
   def test_price_day(self):
     coin = 'BTC'
     curr = 'USD'
-    price = cryptocompare.get_historical_price_day(coin, curr=curr, limit=3, exchange='CCCAGG', toTs=1582204483)
+    price = cryptocompare.get_historical_price_day(coin, curr=curr, limit=3, exchange='CCCAGG', toTs=datetime.datetime(2019,6,6))
     for frame in price:
       self.assertIn('time', frame)
 
   def test_price_hour(self):
     coin = 'BTC'
     curr = 'USD'
-    price = cryptocompare.get_historical_price_hour(coin, curr=curr, limit=3, exchange='CCCAGG', toTs=1582204483)
+    price = cryptocompare.get_historical_price_hour(coin, curr=curr, limit=3, exchange='CCCAGG', toTs=datetime.datetime(2019,6,6,12))
     for frame in price:
       self.assertIn('time', frame)
 
   def test_price_minute(self):
     coin = 'BTC'
     curr = 'USD'
-    price = cryptocompare.get_historical_price_minute(coin, curr=curr, limit=3, exchange='CCCAGG', toTs=1582204483)
+    price = cryptocompare.get_historical_price_minute(coin, curr=curr, limit=3, exchange='CCCAGG', toTs=datetime.datetime(2019,6,6,12,55))
     for frame in price:
       self.assertIn('time', frame)
 
