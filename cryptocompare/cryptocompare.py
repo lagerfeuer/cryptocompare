@@ -30,7 +30,7 @@ LIMIT = 1440
 def _query_cryptocompare(url: str, errorCheck: bool = True) -> Optional[Dict]:
     """
     Query the url and return the result or None on failure.
-    
+
     :param url: the url
     :param errorCheck: run extra error checks (default: True)
     :returns: respones, or nothing if errorCheck=True
@@ -60,7 +60,7 @@ def _format_parameter(parameter: object) -> str:
         return str(parameter)
 
 
-def _format_timestamp(timestamp) -> int:
+def _format_timestamp(timestamp: Timestamp) -> int:
     """
     Format the timestamp depending on its type and return
     the integer representation accepted by the API.
@@ -69,8 +69,7 @@ def _format_timestamp(timestamp) -> int:
     """
     if isinstance(timestamp, datetime.datetime):
         return int(time.mktime(timestamp.timetuple()))
-    else:
-        return int(timestamp)
+    return int(timestamp)
 
 
 ###############################################################################
@@ -102,13 +101,18 @@ def get_price(coin: str, curr: str = CURR, full: bool = False) -> Optional[Dict]
     :returns: dict of coin and currency price pairs
     """
     if full:
-        return _query_cryptocompare(_URL_PRICE_MULTI_FULL.format(_format_parameter(coin),
-                                                                 _format_parameter(curr)))
+        return _query_cryptocompare(
+            _URL_PRICE_MULTI_FULL.format(
+                _format_parameter(coin), _format_parameter(curr))
+        )
     if isinstance(coin, list):
-        return _query_cryptocompare(_URL_PRICE_MULTI.format(_format_parameter(coin),
-                                                            _format_parameter(curr)))
-    else:
-        return _query_cryptocompare(_URL_PRICE.format(coin, _format_parameter(curr)))
+        return _query_cryptocompare(
+            _URL_PRICE_MULTI.format(_format_parameter(coin),
+                                    _format_parameter(curr))
+        )
+    return _query_cryptocompare(
+        _URL_PRICE.format(coin, _format_parameter(curr))
+    )
 
 
 def get_historical_price(coin: str, curr: str = CURR, timestamp: Timestamp = time.time(),
@@ -122,8 +126,12 @@ def get_historical_price(coin: str, curr: str = CURR, timestamp: Timestamp = tim
     :param exchange: the exchange to use
     :returns: dict of coin and currency price pairs
     """
-    return _query_cryptocompare(_URL_HIST_PRICE.format(coin, _format_parameter(curr),
-                                                       _format_timestamp(timestamp), _format_parameter(exchange)))
+    return _query_cryptocompare(
+        _URL_HIST_PRICE.format(coin,
+                               _format_parameter(curr),
+                               _format_timestamp(timestamp),
+                               _format_parameter(exchange))
+    )
 
 
 def get_historical_price_day(coin: str, curr: str = CURR, limit: int = LIMIT,
@@ -145,7 +153,7 @@ def get_historical_price_day(coin: str, curr: str = CURR, limit: int = LIMIT,
     return None
 
 
-def get_historical_price_hour(coin: str, curr: str = CURR, limit: int = LIMIT, 
+def get_historical_price_hour(coin: str, curr: str = CURR, limit: int = LIMIT,
                               exchange: str = 'CCCAGG', toTs: Timestamp = time.time()) -> Optional[Dict]:
     """
     Get historical price (hourly).
@@ -165,7 +173,7 @@ def get_historical_price_hour(coin: str, curr: str = CURR, limit: int = LIMIT,
     return None
 
 
-def get_historical_price_minute(coin: str, curr: str = CURR, limit: int = LIMIT, 
+def get_historical_price_minute(coin: str, curr: str = CURR, limit: int = LIMIT,
                                 exchange: str = 'CCCAGG', toTs: Timestamp = time.time()) -> Optional[Dict]:
     """
     Get historical price (minute).
@@ -216,13 +224,13 @@ def get_pairs(exchange: str = None) -> Optional[Dict]:
     """
     Get the list of available pairs for a particular exchange or for 
     all exchanges (if exchange is None)
-    
+
     :param exchange: exchange to use (default: None)
     :returns: list of available exchanges
     """
     if exchange is None:
         response = _query_cryptocompare(_URL_PAIRS.split('?')[0])
-        
+
     else:
         response = _query_cryptocompare(_URL_PAIRS.format(exchange))
     if response:
