@@ -14,9 +14,9 @@ _URL_PRICE = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&tsyms={
 _URL_PRICE_MULTI = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&tsyms={}'
 _URL_PRICE_MULTI_FULL = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms={}&tsyms={}'
 _URL_HIST_PRICE = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym={}&tsyms={}&ts={}&e={}'
-_URL_HIST_PRICE_DAY = 'https://min-api.cryptocompare.com/data/histoday?fsym={}&tsym={}&limit={}&e={}'
-_URL_HIST_PRICE_HOUR = 'https://min-api.cryptocompare.com/data/histohour?fsym={}&tsym={}&limit={}&e={}'
-_URL_HIST_PRICE_MINUTE = 'https://min-api.cryptocompare.com/data/histominute?fsym={}&tsym={}&limit={}&e={}'
+_URL_HIST_PRICE_DAY = 'https://min-api.cryptocompare.com/data/histoday?fsym={}&tsym={}&limit={}&e={}&toTs={}'
+_URL_HIST_PRICE_HOUR = 'https://min-api.cryptocompare.com/data/histohour?fsym={}&tsym={}&limit={}&e={}&toTs={}'
+_URL_HIST_PRICE_MINUTE = 'https://min-api.cryptocompare.com/data/histominute?fsym={}&tsym={}&limit={}&e={}&toTs={}'
 _URL_AVG = 'https://min-api.cryptocompare.com/data/generateAvg?fsym={}&tsym={}&e={}'
 _URL_EXCHANGES = 'https://www.cryptocompare.com/api/data/exchanges'
 _URL_PAIRS = 'https://min-api.cryptocompare.com/data/pair/mapping/exchange?e={}'
@@ -55,8 +55,23 @@ def _format_parameter(parameter: object) -> str:
     """
     if isinstance(parameter, list):
         return ','.join(parameter)
+
     else:
         return str(parameter)
+
+
+def _format_timestamp(timestamp) -> int:
+    """
+    Format the timestamp depending on its type and return
+    the integer representation accepted by the API.
+
+    :param timestamp: timestamp to format
+    """
+    if isinstance(timestamp, datetime.datetime):
+        return int(time.mktime(timestamp.timetuple()))
+    else:
+        return int(timestamp)
+
 
 ###############################################################################
 
@@ -107,64 +122,63 @@ def get_historical_price(coin: str, curr: str = CURR, timestamp: Timestamp = tim
     :param exchange: the exchange to use
     :returns: dict of coin and currency price pairs
     """
-    if isinstance(timestamp, datetime.datetime):
-        timestamp = time.mktime(timestamp.timetuple())
     return _query_cryptocompare(_URL_HIST_PRICE.format(coin, _format_parameter(curr),
-                                                       int(timestamp), _format_parameter(exchange)))
+                                                       _format_timestamp(timestamp), _format_parameter(exchange)))
 
 
-# TODO add toTs timestamp
 def get_historical_price_day(coin: str, curr: str = CURR, limit: int = LIMIT,
-                             exchange: str = 'CCCAGG') -> Optional[Dict]:
+                             exchange: str = 'CCCAGG', toTs: Timestamp = time.time()) -> Optional[Dict]:
     """
     Get historical price (day).
 
     :param coin: symbolic name of the coin (e.g. BTC)
     :param curr: short hand description of the currency (e.g. EUR)
-    :param limit: number of data points
+    :param limit: number of data points (max. 2000)
     :param exchange: exchange to use (default: 'CCCAGG')
+    :param toTs: return data before this timestamp. (Unix epoch time or datetime object)
     :returns: dict of coin and currency price pairs
     """
     response = _query_cryptocompare(
-        _URL_HIST_PRICE_DAY.format(coin, _format_parameter(curr), limit, exchange))
+        _URL_HIST_PRICE_DAY.format(coin, _format_parameter(curr), limit, exchange, _format_timestamp(toTs)))
     if response:
         return response['Data']
     return None
 
 
-# TODO add toTs timestamp
 def get_historical_price_hour(coin: str, curr: str = CURR, limit: int = LIMIT, 
-                              exchange: str = 'CCCAGG') -> Optional[Dict]:
+                              exchange: str = 'CCCAGG', toTs: Timestamp = time.time()) -> Optional[Dict]:
     """
     Get historical price (hourly).
 
+
     :param coin: symbolic name of the coin (e.g. BTC)
     :param curr: short hand description of the currency (e.g. EUR)
-    :param limit: number of data points
+    :param limit: number of data points (max. 2000)
     :param exchange: exchange to use (default: 'CCCAGG')
+    :param toTs: return data before this timestamp. (Unix epoch time or datetime object)
     :returns: dict of coin and currency price pairs
     """
     response = _query_cryptocompare(
-        _URL_HIST_PRICE_HOUR.format(coin, _format_parameter(curr), limit, exchange))
+        _URL_HIST_PRICE_HOUR.format(coin, _format_parameter(curr), limit, exchange, _format_timestamp(toTs)))
     if response:
         return response['Data']
     return None
 
 
-# TODO add toTs timestamp
 def get_historical_price_minute(coin: str, curr: str = CURR, limit: int = LIMIT, 
-                                exchange: str = 'CCCAGG') -> Optional[Dict]:
+                                exchange: str = 'CCCAGG', toTs: Timestamp = time.time()) -> Optional[Dict]:
     """
     Get historical price (minute).
 
     :param coin: symbolic name of the coin (e.g. BTC)
     :param curr: short hand description of the currency (e.g. EUR)
-    :param limit: number of data points
+    :param limit: number of data points (max. 2000)
     :param exchange: exchange to use (default: 'CCCAGG')
+    :param toTs: return data before this timestamp. (Unix epoch time or datetime object)
     :returns: dict of coin and currency price pairs
     """
     response = _query_cryptocompare(
-        _URL_HIST_PRICE_MINUTE.format(coin, _format_parameter(curr), limit, exchange))
+        _URL_HIST_PRICE_MINUTE.format(coin, _format_parameter(curr), limit, exchange, _format_timestamp(toTs)))
     if response:
         return response['Data']
     return None
