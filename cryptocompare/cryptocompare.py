@@ -6,7 +6,7 @@ import time
 import datetime
 import typing
 from typing import Union, Optional, List, Dict
-Timestamp = Union[datetime.datetime, int, float]
+Timestamp = Union[datetime.datetime, datetime.date, int, float]
 
 # API
 _URL_COIN_LIST = 'https://www.cryptocompare.com/api/data/coinlist/'
@@ -67,7 +67,7 @@ def _format_timestamp(timestamp: Timestamp) -> int:
 
     :param timestamp: timestamp to format
     """
-    if isinstance(timestamp, datetime.datetime):
+    if isinstance(timestamp, datetime.datetime) or isinstance(timestamp, datetime.date):
         return int(time.mktime(timestamp.timetuple()))
     return int(timestamp)
 
