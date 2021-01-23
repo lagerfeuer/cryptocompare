@@ -5,11 +5,13 @@ import requests
 import time
 import datetime
 import typing
+import os
 from typing import Union, Optional, List, Dict
 Timestamp = Union[datetime.datetime, datetime.date, int, float]
 
 # API
-_URL_COIN_LIST = 'https://www.cryptocompare.com/api/data/coinlist/'
+_API_KEY_PARAMETER = ""
+_URL_COIN_LIST = 'https://www.cryptocompare.com/api/data/coinlist?'
 _URL_PRICE = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&tsyms={}'
 _URL_PRICE_MULTI = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&tsyms={}'
 _URL_PRICE_MULTI_FULL = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms={}&tsyms={}'
@@ -18,7 +20,7 @@ _URL_HIST_PRICE_DAY = 'https://min-api.cryptocompare.com/data/histoday?fsym={}&t
 _URL_HIST_PRICE_HOUR = 'https://min-api.cryptocompare.com/data/histohour?fsym={}&tsym={}&limit={}&e={}&toTs={}'
 _URL_HIST_PRICE_MINUTE = 'https://min-api.cryptocompare.com/data/histominute?fsym={}&tsym={}&limit={}&e={}&toTs={}'
 _URL_AVG = 'https://min-api.cryptocompare.com/data/generateAvg?fsym={}&tsym={}&e={}'
-_URL_EXCHANGES = 'https://www.cryptocompare.com/api/data/exchanges'
+_URL_EXCHANGES = 'https://www.cryptocompare.com/api/data/exchanges?'
 _URL_PAIRS = 'https://min-api.cryptocompare.com/data/pair/mapping/exchange?e={}'
 
 # DEFAULTS
@@ -27,16 +29,18 @@ LIMIT = 1440
 ###############################################################################
 
 
-def _query_cryptocompare(url: str, errorCheck: bool = True) -> Optional[Dict]:
+def _query_cryptocompare(url: str, errorCheck: bool = True, api_key: str = None) -> Optional[Dict]:
     """
     Query the url and return the result or None on failure.
 
     :param url: the url
     :param errorCheck: run extra error checks (default: True)
     :returns: respones, or nothing if errorCheck=True
+    :api_key: optional, if you want to add an API Key
     """
+    api_key_parameter = _set_api_key_parameter(api_key)
     try:
-        response = requests.get(url).json()
+        response = requests.get(url + api_key_parameter).json()
     except Exception as e:
         print('Error getting coin information. %s' % str(e))
         return None
@@ -71,6 +75,14 @@ def _format_timestamp(timestamp: Timestamp) -> int:
         return int(time.mktime(timestamp.timetuple()))
     return int(timestamp)
 
+
+def _set_api_key_parameter(api_key: str = None) -> str:
+    if api_key is None:
+        api_key = os.getenv('CRYPTOCOMPARE_API_KEY')
+    if api_key is not None:
+        _API_KEY = "&api_key={}".format(api_key)
+        return _API_KEY
+    return ""
 
 ###############################################################################
 
