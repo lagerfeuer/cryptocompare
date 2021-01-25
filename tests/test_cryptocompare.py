@@ -31,13 +31,14 @@ class TestCryptoCompare(unittest.TestCase):
         coin = 'BTC'
         price = cryptocompare.get_price(coin)
         self.assertCoinAndCurrInPrice(coin, 'EUR', price)
-        price = cryptocompare.get_price(coin, curr='USD')
+
+        price = cryptocompare.get_price(coin, currency='USD')
         self.assertCoinAndCurrInPrice(coin, 'USD', price)
         currencies = ['EUR', 'USD', 'GBP']
-        price = cryptocompare.get_price(coin, curr=currencies)
+        price = cryptocompare.get_price(coin, currency=currencies)
         self.assertCoinAndCurrInPrice(coin, currencies, price)
         coins = ['BTC', 'XMR']
-        price = cryptocompare.get_price(coins, curr=currencies)
+        price = cryptocompare.get_price(coins, currency=currencies)
         self.assertCoinAndCurrInPrice(coins, currencies, price)
 
     def test_get_price_full(self):
@@ -62,7 +63,7 @@ class TestCryptoCompare(unittest.TestCase):
         coin = 'BTC'
         curr = 'USD'
         price = cryptocompare.get_historical_price_day(
-            coin, curr=curr, limit=3, exchange='CCCAGG', toTs=datetime.datetime(2019, 6, 6))
+            coin, currency=curr, limit=3, exchange='CCCAGG', toTs=datetime.datetime(2019, 6, 6))
         for frame in price:
             self.assertIn('time', frame)
 
@@ -70,7 +71,7 @@ class TestCryptoCompare(unittest.TestCase):
         coin = 'BTC'
         curr = 'USD'
         price = cryptocompare.get_historical_price_hour(
-            coin, curr=curr, limit=3, exchange='CCCAGG', toTs=datetime.datetime(2019, 6, 6, 12))
+            coin, currency=curr, limit=3, exchange='CCCAGG', toTs=datetime.datetime(2019, 6, 6, 12))
         for frame in price:
             self.assertIn('time', frame)
 
@@ -78,7 +79,7 @@ class TestCryptoCompare(unittest.TestCase):
         coin = 'BTC'
         curr = 'USD'
         price = cryptocompare.get_historical_price_minute(
-            coin, curr=curr, limit=3, exchange='CCCAGG', toTs=datetime.datetime.now())
+            coin, currency=curr, limit=3, exchange='CCCAGG', toTs=datetime.datetime.now())
         for frame in price:
             self.assertIn('time', frame)
 
