@@ -15,6 +15,14 @@ pip3 install cryptocompare
 import cryptocompare
 ```
 
+## API Key
+
+If you have an API key, you can either set it as environment variable `CRYPTOCOMPARE_API_KEY` or set it manually with: 
+
+```
+cryptocompare.cryptocompare._set_api_key_parameter(KEY_HERE)
+```
+
 ### Coin List
 
 ```python
@@ -135,7 +143,7 @@ pairs = cryptocompare.get_pairs(exchange='Kraken')
 
 ## Developing
 
-Install the dev dependencies and run the tests:
+Tests run assuming you have an API key, otherwise they will error due to rate limiting. Install the dev dependencies and run the tests:
 ```sh
 pip3 install -r requirements.txt
 python3 -m pytest

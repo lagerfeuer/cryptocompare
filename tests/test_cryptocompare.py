@@ -3,6 +3,7 @@ import time
 import unittest
 import cryptocompare
 import datetime
+import os
 
 
 class TestCryptoCompare(unittest.TestCase):
@@ -30,6 +31,7 @@ class TestCryptoCompare(unittest.TestCase):
         coin = 'BTC'
         price = cryptocompare.get_price(coin)
         self.assertCoinAndCurrInPrice(coin, 'EUR', price)
+
         price = cryptocompare.get_price(coin, currency='USD')
         self.assertCoinAndCurrInPrice(coin, 'USD', price)
         currencies = ['EUR', 'USD', 'GBP']
@@ -96,6 +98,24 @@ class TestCryptoCompare(unittest.TestCase):
     def test_get_pairs(self):
         pairs = cryptocompare.get_pairs(exchange='Kraken')
         self.assertEqual('Kraken', pairs[0]['exchange'])
+
+    def test_sets_api_key_using_environment_variable(self):
+        os.environ["CRYPTOCOMPARE_API_KEY"] = "Key"
+        api_key_parameter = cryptocompare.cryptocompare._set_api_key_parameter(
+            None)
+        assert api_key_parameter == "&api_key=Key"
+
+    def test_sets_api_key_with_no_env_var_and_none_passed(self):
+        if os.getenv("CRYPTOCOMPARE_API_KEY"):
+            del os.environ['CRYPTOCOMPARE_API_KEY']
+        api_key_parameter = cryptocompare.cryptocompare._set_api_key_parameter(
+            None)
+        assert api_key_parameter == ""
+
+    def test_sets_api_key_passed_in_works(self):
+        api_key_parameter = cryptocompare.cryptocompare._set_api_key_parameter(
+            "keytest")
+        assert api_key_parameter == "&api_key=keytest"
 
 
 if __name__ == "__main__":
