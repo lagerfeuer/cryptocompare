@@ -5,7 +5,7 @@ with open('README.md', encoding="utf-8") as f:
 
 setup(
     name='cryptocompare',
-    version='0.7.4',
+    version='0.7.5',
     description='Wrapper for CryptoCompare.com',
     long_description=readme,
     long_description_content_type='text/markdown',
