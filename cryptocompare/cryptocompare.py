@@ -11,6 +11,7 @@ Timestamp = Union[datetime.datetime, datetime.date, int, float]
 
 # API
 _API_KEY = None
+_API_KEY_PARAMETER = ""
 _URL_COIN_LIST = 'https://www.cryptocompare.com/api/data/coinlist?'
 _URL_PRICE = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&tsyms={}'
 _URL_PRICE_MULTI = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&tsyms={}'
@@ -78,14 +79,16 @@ def _format_timestamp(timestamp: Timestamp) -> int:
     return int(timestamp)
 
 def _set_api_key_parameter(api_key: str = None) -> str:
+    global _API_KEY
     _API_KEY = api_key
     
 def _get_api_key_parameter(api_key: str = None) -> str:
     if api_key is None:
         api_key = os.getenv('CRYPTOCOMPARE_API_KEY')
     if api_key is not None:
-        _API_KEY = "&api_key={}".format(api_key)
-        return _API_KEY
+        global _API_KEY_PARAMETER
+        _API_KEY_PARAMETER = "&api_key={}".format(api_key)
+        return _API_KEY_PARAMETER
     return ""
 
 ###############################################################################
