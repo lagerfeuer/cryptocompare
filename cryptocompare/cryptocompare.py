@@ -10,6 +10,7 @@ from typing import Union, Optional, List, Dict
 Timestamp = Union[datetime.datetime, datetime.date, int, float]
 
 # API
+_API_KEY = None
 _API_KEY_PARAMETER = ""
 _URL_COIN_LIST = 'https://www.cryptocompare.com/api/data/coinlist?'
 _URL_PRICE = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&tsyms={}'
@@ -38,7 +39,9 @@ def _query_cryptocompare(url: str, errorCheck: bool = True, api_key: str = None)
     :returns: respones, or nothing if errorCheck=True
     :api_key: optional, if you want to add an API Key
     """
-    api_key_parameter = _set_api_key_parameter(api_key)
+    if api_key is None and _API_KEY is not None:
+        api_key = _API_KEY
+    api_key_parameter = _get_api_key_parameter(api_key)
     try:
         response = requests.get(url + api_key_parameter).json()
     except Exception as e:
@@ -75,13 +78,17 @@ def _format_timestamp(timestamp: Timestamp) -> int:
         return int(time.mktime(timestamp.timetuple()))
     return int(timestamp)
 
-
 def _set_api_key_parameter(api_key: str = None) -> str:
+    global _API_KEY
+    _API_KEY = api_key
+    
+def _get_api_key_parameter(api_key: str = None) -> str:
     if api_key is None:
         api_key = os.getenv('CRYPTOCOMPARE_API_KEY')
     if api_key is not None:
-        _API_KEY = "&api_key={}".format(api_key)
-        return _API_KEY
+        global _API_KEY_PARAMETER
+        _API_KEY_PARAMETER = "&api_key={}".format(api_key)
+        return _API_KEY_PARAMETER
     return ""
 
 ###############################################################################
