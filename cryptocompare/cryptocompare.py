@@ -165,6 +165,57 @@ def get_historical_price_day(coin: str, currency: str = CURRENCY, limit: int = L
     return None
 
 
+def get_historical_price_day_from(coin: str, currency: str = CURRENCY,
+                                 exchange: str = 'CCCAGG', toTs: Timestamp = time.time(),
+                                 fromTs: Timestamp = 0, delay: float = 0.2) -> Optional[Dict]:
+    """
+    Get historical price (day).
+
+    :param coin: symbolic name of the coin (e.g. BTC)
+    :param currency: short hand description of the currency (e.g. EUR)
+    :param exchange: exchange to use (default: 'CCCAGG')
+    :param toTs: return data before this timestamp. (Unix epoch time or datetime object)
+    :param fromTs: return data after this timestamp. (Unix epoch time or datetime object)
+    :param delay: time delay for API rate limit (default: 300 calls / 1 minute)
+    :returns: dict of coin and currency price pairs
+    """
+    allHist = []
+    toTs = _format_timestamp(toTs)
+    fromTs = _format_timestamp(fromTs)
+
+    while fromTs <= toTs:
+        p = get_historical_price_day(coin, currency, LIMIT, exchange, toTs)
+        if p is None:
+            return None
+
+        validHist = [elem for elem in p if elem['time'] >= fromTs and elem['open'] != 0 and elem['close'] != 0]
+        allHist = validHist + allHist
+
+        if len(validHist) < len(p):
+            break
+        toTs = (min(p, key = lambda x:x['time']))['time'] - 1
+        time.sleep(delay)
+
+    return allHist
+
+
+def get_historical_price_day_all(coin: str, currency: str = CURRENCY,
+                                 exchange: str = 'CCCAGG') -> Optional[Dict]:
+    """
+    Get historical price (day, all).
+
+    :param coin: symbolic name of the coin (e.g. BTC)
+    :param currency: short hand description of the currency (e.g. EUR)
+    :param exchange: exchange to use (default: 'CCCAGG')
+    :returns: dict of coin and currency price pairs
+    """
+    response = _query_cryptocompare(
+        _URL_HIST_PRICE_DAY.format(coin, _format_parameter(currency), 1, exchange, time.time()) + "&allData=true")
+    if response:
+        return response['Data']['Data']
+    return None
+
+
 def get_historical_price_hour(coin: str, currency: str = CURRENCY, limit: int = LIMIT,
                               exchange: str = 'CCCAGG', toTs: Timestamp = time.time()) -> Optional[Dict]:
     """
@@ -183,6 +234,38 @@ def get_historical_price_hour(coin: str, currency: str = CURRENCY, limit: int = 
     if response:
         return response['Data']['Data']
     return None
+
+
+def get_historical_price_hour_from(coin: str, currency: str = CURRENCY,
+                                 exchange: str = 'CCCAGG', toTs: Timestamp = time.time(),
+                                 fromTs: Timestamp = 0, delay: float = 0.2) -> Optional[Dict]:
+    """
+    Get historical price (day).
+
+    :param coin: symbolic name of the coin (e.g. BTC)
+    :param currency: short hand description of the currency (e.g. EUR)
+    :param exchange: exchange to use (default: 'CCCAGG')
+    :param toTs: return data before this timestamp. (Unix epoch time or datetime object)
+    :param fromTs: return data after this timestamp. (Unix epoch time or datetime object)
+    :param delay: time delay for API rate limit (default: 300 calls / 1 minute)
+    :returns: dict of coin and currency price pairs
+    """
+    allHist = []
+
+    while fromTs <= toTs:
+        p = get_historical_price_hour(coin, currency, LIMIT, exchange, toTs)
+        if p is None:
+            return None
+
+        validHist = [elem for elem in p if elem['time'] >= fromTs and elem['open'] != 0 and elem['close'] != 0]
+        allHist = validHist + allHist
+
+        if len(validHist) < len(p):
+            break
+        toTs = (min(p, key = lambda x:x['time']))['time'] - 1
+        time.sleep(delay)
+
+    return allHist
 
 
 def get_historical_price_minute(coin: str, currency: str = CURRENCY, limit: int = LIMIT,
