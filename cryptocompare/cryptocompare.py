@@ -147,7 +147,7 @@ def get_historical_price(coin: str, currency: str = CURRENCY, timestamp: Timesta
 
 
 def get_historical_price_day(coin: str, currency: str = CURRENCY, limit: int = LIMIT,
-                             exchange: str = 'CCCAGG', toTs: Timestamp = time.time()) -> Optional[Dict]:
+                             exchange: str = 'CCCAGG', toTs: Timestamp = time.time()) -> Optional[List[Dict]]:
     """
     Get historical price (day).
 
@@ -167,7 +167,7 @@ def get_historical_price_day(coin: str, currency: str = CURRENCY, limit: int = L
 
 def get_historical_price_day_from(coin: str, currency: str = CURRENCY,
                                  exchange: str = 'CCCAGG', toTs: Timestamp = time.time(),
-                                 fromTs: Timestamp = 0, delay: float = 0.2) -> Optional[Dict]:
+                                 fromTs: Timestamp = 0, delay: float = 0.2) -> Optional[List[Dict]]:
     """
     Get historical price (day).
 
@@ -179,28 +179,28 @@ def get_historical_price_day_from(coin: str, currency: str = CURRENCY,
     :param delay: time delay for API rate limit (default: 300 calls / 1 minute)
     :returns: dict of coin and currency price pairs
     """
-    allHist = []
-    toTs = _format_timestamp(toTs)
-    fromTs = _format_timestamp(fromTs)
+    allHist: List[Dict] = []
+    toTs_i = _format_timestamp(toTs)
+    fromTs_i = _format_timestamp(fromTs)
 
-    while fromTs <= toTs:
-        p = get_historical_price_day(coin, currency, LIMIT, exchange, toTs)
+    while fromTs_i <= toTs_i:
+        p = get_historical_price_day(coin, _format_parameter(currency), LIMIT, exchange, toTs_i)
         if p is None:
             return None
 
-        validHist = [elem for elem in p if elem['time'] >= fromTs and elem['open'] != 0 and elem['close'] != 0]
+        validHist = [elem for elem in p if elem['time'] >= fromTs_i and elem['open'] != 0 and elem['close'] != 0]
         allHist = validHist + allHist
 
         if len(validHist) < len(p):
             break
-        toTs = (min(p, key = lambda x:x['time']))['time'] - 1
+        toTs_i = (min(p, key = lambda x:x['time']))['time'] - 1
         time.sleep(delay)
 
     return allHist
 
 
 def get_historical_price_day_all(coin: str, currency: str = CURRENCY,
-                                 exchange: str = 'CCCAGG') -> Optional[Dict]:
+                                 exchange: str = 'CCCAGG') -> Optional[List[Dict]]:
     """
     Get historical price (day, all).
 
@@ -217,7 +217,7 @@ def get_historical_price_day_all(coin: str, currency: str = CURRENCY,
 
 
 def get_historical_price_hour(coin: str, currency: str = CURRENCY, limit: int = LIMIT,
-                              exchange: str = 'CCCAGG', toTs: Timestamp = time.time()) -> Optional[Dict]:
+                              exchange: str = 'CCCAGG', toTs: Timestamp = time.time()) -> Optional[List[Dict]]:
     """
     Get historical price (hourly).
 
@@ -238,7 +238,7 @@ def get_historical_price_hour(coin: str, currency: str = CURRENCY, limit: int = 
 
 def get_historical_price_hour_from(coin: str, currency: str = CURRENCY,
                                  exchange: str = 'CCCAGG', toTs: Timestamp = time.time(),
-                                 fromTs: Timestamp = 0, delay: float = 0.2) -> Optional[Dict]:
+                                 fromTs: Timestamp = 0, delay: float = 0.2) -> Optional[List[Dict]]:
     """
     Get historical price (day).
 
@@ -250,26 +250,28 @@ def get_historical_price_hour_from(coin: str, currency: str = CURRENCY,
     :param delay: time delay for API rate limit (default: 300 calls / 1 minute)
     :returns: dict of coin and currency price pairs
     """
-    allHist = []
+    allHist: List[Dict] = []
+    toTs_i = _format_timestamp(toTs)
+    fromTs_i = _format_timestamp(fromTs)
 
-    while fromTs <= toTs:
-        p = get_historical_price_hour(coin, currency, LIMIT, exchange, toTs)
+    while fromTs_i <= toTs_i:
+        p = get_historical_price_hour(coin, _format_parameter(currency), 2000, exchange, toTs_i)
         if p is None:
             return None
 
-        validHist = [elem for elem in p if elem['time'] >= fromTs and elem['open'] != 0 and elem['close'] != 0]
+        validHist = [elem for elem in p if elem['time'] >= fromTs_i and elem['open'] != 0 and elem['close'] != 0]
         allHist = validHist + allHist
 
         if len(validHist) < len(p):
             break
-        toTs = (min(p, key = lambda x:x['time']))['time'] - 1
+        toTs_i = (min(p, key = lambda x:x['time']))['time'] - 1
         time.sleep(delay)
 
     return allHist
 
 
 def get_historical_price_minute(coin: str, currency: str = CURRENCY, limit: int = LIMIT,
-                                exchange: str = 'CCCAGG', toTs: Timestamp = time.time()) -> Optional[Dict]:
+                                exchange: str = 'CCCAGG', toTs: Timestamp = time.time()) -> Optional[List[Dict]]:
     """
     Get historical price (minute).
 
