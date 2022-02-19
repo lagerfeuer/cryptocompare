@@ -23,6 +23,8 @@ _URL_AVG = 'https://min-api.cryptocompare.com/data/generateAvg?fsym={}&tsym={}&e
 _URL_EXCHANGES = 'https://www.cryptocompare.com/api/data/exchanges?'
 _URL_PAIRS = 'https://min-api.cryptocompare.com/data/pair/mapping/exchange?e={}'
 
+_MAX_LIMIT_HISTO_API = 2000
+
 # DEFAULTS
 CURRENCY = 'EUR'
 LIMIT = 1440
@@ -184,7 +186,7 @@ def get_historical_price_day_from(coin: str, currency: str = CURRENCY,
     fromTs_i = _format_timestamp(fromTs)
 
     while fromTs_i <= toTs_i:
-        p = get_historical_price_day(coin, _format_parameter(currency), LIMIT, exchange, toTs_i)
+        p = get_historical_price_day(coin, _format_parameter(currency), _MAX_LIMIT_HISTO_API, exchange, toTs_i)
         if p is None:
             return None
 
@@ -255,7 +257,7 @@ def get_historical_price_hour_from(coin: str, currency: str = CURRENCY,
     fromTs_i = _format_timestamp(fromTs)
 
     while fromTs_i <= toTs_i:
-        p = get_historical_price_hour(coin, _format_parameter(currency), 2000, exchange, toTs_i)
+        p = get_historical_price_hour(coin, _format_parameter(currency), _MAX_LIMIT_HISTO_API, exchange, toTs_i)
         if p is None:
             return None
 
