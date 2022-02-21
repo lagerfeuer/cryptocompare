@@ -3,6 +3,7 @@ import time
 import unittest
 import cryptocompare
 import datetime
+import calendar
 import os
 
 
@@ -67,11 +68,40 @@ class TestCryptoCompare(unittest.TestCase):
         for frame in price:
             self.assertIn('time', frame)
 
+    def test_price_day_all(self):
+        coin = 'BTC'
+        curr = 'USD'
+        price = cryptocompare.get_historical_price_day_all(
+            coin, currency=curr, exchange='CCCAGG')
+        self.assertTrue(len(price) > 1)
+        for frame in price:
+            self.assertIn('time', frame)
+
+    def test_price_day_from(self):
+        coin = 'BTC'
+        curr = 'USD'
+        price = cryptocompare.get_historical_price_day_from(
+            coin, currency=curr, exchange='CCCAGG', toTs=int(calendar.timegm(datetime.datetime(2019, 6, 6).timetuple())),
+            fromTs = int(calendar.timegm(datetime.datetime(2019, 6, 4).timetuple())))
+        self.assertTrue(len(price) == 3)
+        for frame in price:
+            self.assertIn('time', frame)
+
     def test_price_hour(self):
         coin = 'BTC'
         curr = 'USD'
         price = cryptocompare.get_historical_price_hour(
             coin, currency=curr, limit=3, exchange='CCCAGG', toTs=datetime.datetime(2019, 6, 6, 12))
+        for frame in price:
+            self.assertIn('time', frame)
+
+    def test_price_hour_from(self):
+        coin = 'BTC'
+        curr = 'USD'
+        price = cryptocompare.get_historical_price_hour_from(
+            coin, currency=curr, exchange='CCCAGG', toTs=int(calendar.timegm(datetime.datetime(2019, 6, 6, 3, 0, 0).timetuple())),
+            fromTs = int(calendar.timegm(datetime.datetime(2019, 6, 6, 1, 0, 0).timetuple())))
+        self.assertTrue(len(price) == 3)
         for frame in price:
             self.assertIn('time', frame)
 
