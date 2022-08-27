@@ -51,10 +51,11 @@ def _query_cryptocompare(
     try:
         response = requests.get(url + api_key_parameter).json()
     except Exception as e:
-        print("Error getting coin information. %s" % str(e))
+        print(f"Error getting coin information. {e}")
         return None
     if errorCheck and (response.get("Response") == "Error"):
-        print("[ERROR] %s" % response.get("Message"))
+        msg = response.get("Message")
+        print(f"[ERROR] {msg}")
         return None
     return response
 
@@ -89,7 +90,7 @@ def _set_api_key_parameter(api_key: str = None) -> str:
     if api_key is None:
         api_key = os.getenv("CRYPTOCOMPARE_API_KEY")
     if api_key is not None:
-        _API_KEY = "&api_key={}".format(api_key)
+        _API_KEY = f"&api_key={api_key}"
         return _API_KEY
     return ""
 
