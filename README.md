@@ -1,4 +1,4 @@
-# cryptocompare ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/lagerfeuer/cryptocompare/Test/master) [![Coverage Status](https://coveralls.io/repos/github/lagerfeuer/cryptocompare/badge.svg?branch=master)](https://coveralls.io/github/lagerfeuer/cryptocompare?branch=master) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/cryptocompare) [![PyPI version](https://badge.fury.io/py/cryptocompare.svg)](https://badge.fury.io/py/cryptocompare)
+# cryptocompare [![Test](https://github.com/lagerfeuer/cryptocompare/actions/workflows/test.yml/badge.svg)](https://github.com/lagerfeuer/cryptocompare/actions/workflows/test.yml) [![Coverage Status](https://coveralls.io/repos/github/lagerfeuer/cryptocompare/badge.svg?branch=master)](https://coveralls.io/github/lagerfeuer/cryptocompare?branch=master) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/cryptocompare) [![PyPI version](https://badge.fury.io/py/cryptocompare.svg)](https://badge.fury.io/py/cryptocompare)
 
 
 Python3 wrapper to query cryptocurrency prices (and more) using the [CryptoCompare](https://min-api.cryptocompare.com/) API.
