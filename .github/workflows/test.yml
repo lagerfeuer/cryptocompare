@@ -1,19 +1,28 @@
 name: Test
 
-on: [push, pull_request]
+on: 
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
 
 jobs:
   build:
+    strategy:
+      matrix:
+        version: ['3.8', '3.9', '3.10', '3.11']
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
 
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v1
+    - name: Set up Python
+      uses: actions/setup-python@v4
       with:
-        python-version: 3.8
+        python-version: ${{ matrix.version }}
 
     - name: Install dependencies
       run: |
@@ -27,12 +36,4 @@ jobs:
     - name: Test with pytest
       run: |
         python -m pytest --cov=cryptocompare tests/
-
-    - name: Upload coverage report to coveralls.io
-      if: github.event == 'push'
-      env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-      run: |
-        pip install coveralls
-        coveralls
 
